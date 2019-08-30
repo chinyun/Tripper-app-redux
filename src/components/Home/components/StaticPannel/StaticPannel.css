@@ -1,0 +1,268 @@
+.static-pannel-wrapper {
+  width: 80%;
+  max-width: 1048px;
+  margin: 15px;
+  padding: 10px;
+}
+
+.static-pannel {
+  background-color: #FFF;
+  box-shadow: 3px 5px 10px 0px rgba(0,0,0, 0.1);
+  border: 0;
+  border-radius: 12px;
+  padding: 2% 1.5%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.static-pannel-section-wrapper {
+  width: 30%;
+  padding: 0 5%;
+}
+
+.static-pannel-section {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.static-pannel-topic {
+  margin-right: 15px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+}
+
+.static-pannel-title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.static-pannel-subtitle {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.static-pannel-amount {
+  font-size: 24px;
+  font-weight: 300;
+  color: #3e3e3e;
+  height: 36px;
+  margin-top: 23px;
+  animation: fadein 0.4s ease-in-out;
+}
+
+@keyframes
+  fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+.static-pannel-update {
+  height: 36px;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: flex-end;
+}
+
+.total-budget-update {
+  display: flex;
+  justify-content: center;
+}
+
+.total-budget-update .cancel-btn {
+  margin: 5px 2px;
+}
+
+.static-pannel-input {
+  font-size: 20px;
+  font-weight: 400;
+  color: #3E3E3E;
+  background-color: #F0F0F0;
+  border: 0;
+  border-radius: 6px;
+  width: 96px;
+  height: 32px;
+  padding-left: 6px;
+}
+
+.static-pannel-input::placeholder {
+  color: rgba(62,62,62, 0.6);
+}
+
+.static-pannel-input:focus {
+  background-color: rgba(0, 0, 0,0.02);
+  border: 1px solid #177EF5;
+}
+
+.static-pannel-text {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  animation: fadein 0.4s ease-in-out;
+}
+
+.static-pannel-text span {
+  font-size: 24px;
+  font-weight: 400;
+  color: #177EF5;
+}
+
+.static-pannel-text button {
+  margin-top: 3px;
+}
+
+@media screen and (max-width: 1512px) {
+  .static-pannel-wrapper {
+    min-width: 900px;
+  }
+}
+
+@media screen and (max-width: 1047px) {
+  .static-pannel-wrapper {
+    min-width: 600px;
+    max-width: 600px;
+  }
+
+  .static-pannel-amount, .static-pannel-text span {
+    font-size: 18px;
+  }
+
+  .static-pannel-text button {
+    margin-top: 0;
+  }
+
+  .static-pannel-text button img {
+    margin: 0 5px 2px 5px;
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1047px) {
+  .static-pannel {
+    padding: 3% 1.5%;
+  }
+
+  .static-pannel-section-wrapper {
+    padding: 0;
+    margin: 0 15px;
+  }
+
+  .static-pannel-input {
+    font-size: 18px;
+    width: 60px;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .static-pannel-wrapper {
+    min-width: 512px;
+    margin: 10px;
+  }
+  
+  .static-pannel {
+    border-radius: 20px;
+    padding: 10px 0 0 0;
+  }
+
+  .static-pannel-section-wrapper {
+    width: 33%;
+    margin: 10px 0;
+    padding: 0 1%;
+  }
+
+  .static-pannel-section {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 25%;
+    margin: 5px 0;
+  }
+
+  .static-pannel-topic {
+    margin-right: 0;
+    padding: 3px 0;
+  }
+
+  .static-pannel-title {
+    font-size: 14px;
+  }
+
+  .static-pannel-amount {
+    margin-top: 24px;
+  }
+
+  .static-pannel-text span {
+    margin-top: 2px;
+  }
+
+  .static-pannel-text button {
+    margin-top: 0px;
+  }
+
+  .static-pannel-input {
+    width: 72px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .static-pannel-wrapper {
+    min-width: 280px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .static-pannel {
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0;
+  }
+
+  .static-pannel-section-wrapper {
+    width: 80%;
+    margin: 5px 0;
+  }
+
+  .static-pannel-section {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 0;
+    margin: 2px;
+  }
+
+  .static-pannel-title {
+    letter-spacing: 2px;
+    font-size: 13px;
+  }
+
+  .static-pannel-input {
+    height: 27px;
+  }
+
+  .static-pannel-update {
+    height: 27px;
+  }
+
+  .static-pannel-amount {
+    height: 27px;
+    margin-right: 7px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .static-pannel-wrapper {
+    margin: 10px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 358px) {
+  .static-pannel-wrapper {
+    min-width: 267px;
+  }
+}

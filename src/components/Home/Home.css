@@ -1,0 +1,461 @@
+/*animation css*/
+@keyframes
+  animateleft {
+    from {
+      left: -300px;
+      opacity: 0;
+    } 
+    to {
+      left: 0;
+      opacity: 1;
+    }
+  }
+
+@keyframes
+  leftfadein {
+    from {
+      margin-left: 5px;
+      opacity: 0;
+    }
+    to {
+      margin-left: 15px;
+      opacity: 1;
+    }
+  }
+
+@keyframes
+  upfadein {
+    0% {
+      margin-bottom: 10px;
+      opacity: 0;
+    }
+    25% {
+      margin-bottom: 20px;
+      opacity: 0.75;
+    }
+    100% {
+      margin-bottom: 12px;
+      opacity: 1;
+    }
+  }
+
+/*share css*/
+.hidden {
+  display: none;
+}
+
+.home-title {
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #3E3E3E;
+  margin: 12px 15px;
+}
+
+.home-subtitle {
+  font-weight: 600;
+  color: #3E3E3E;
+  text-transform: capitalize;
+  margin: 0 15px;
+  animation: leftfadein 0.5s ease-in;
+}
+
+/*in SideBar & Accounts*/
+.show-add-btn {
+  letter-spacing: 0.2px;
+  color: #9B9B9B;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: 0s;
+}
+
+.show-add-btn:hover {
+  color: #177EF5;
+}
+
+.show-add-btn:active {
+  color: #177EF5;
+}
+
+.add-submit-input {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #FFF;
+  min-width: 76px;
+  height: 36px;
+  margin: 6px 0;
+  padding: 0 13px;
+  border-radius: 8px;
+  background-color: #2D8AF5;
+  cursor: pointer;
+}
+
+.add-submit-input:active {
+  background-color: #196FD0;
+}
+
+/*in SideBar & StaticPannel & SetBudget*/
+.cancel-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2px;
+}
+
+.cancel-btn:hover {
+  background-color: #DDD;
+}
+
+.cancel-btn-img {
+  width: 10px;
+  height: 10px;
+  margin: 0 7px;
+}
+
+/*Home & List*/
+.delete-btn {
+  letter-spacing: 1px;
+  color: #9B9B9B;
+  padding: 2px 2px;
+}
+
+.delete-btn:hover {
+  color: #177EF5;
+}
+
+.delete-btn:active {
+  color: #177EF5;
+}
+
+.update-btn {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+}
+
+.update-icon-img {
+  width: 10px;
+  margin: 3px 5px 0 5px;
+}
+
+.select-icon-img {
+  width: 10px;
+  margin: 0 5px;
+}
+
+/*only in Home*/
+.home-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.side-bar-wrapper {
+  width: 32%;
+  max-width: 380px;
+  background-color: #FFF;
+  position: relative;
+  top: 40px;
+  animation: animateleft 0.4s;
+}
+
+.side-bar {
+  width: 100%;
+}
+
+.main-section {
+  width: 100%;
+  margin-top: 40px;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sub-section {
+  width: 100%;
+  background-color: #F9F9F9;
+  display: flex;
+  justify-content: center;
+}
+
+.minor-section {
+  width: 45%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accounts-wrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.accounts-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accounts-right-column, .accounts-left-column {
+  margin-right: 13px;
+  display: flex;
+}
+
+.show-days {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.show-days span {
+  font-weight: 600;
+  color: #3E3E3E;
+  margin-left: 6px;
+  animation: upfadein 0.2s ease-out;
+}
+
+.contorl-day {
+  margin: 2px 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-btn {
+  letter-spacing: 1px;
+  color: rgba( 62, 62, 62,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0s;
+}
+
+.add-btn:hover {
+  color: #177EF5;
+}
+
+.add-btn:active {
+  color: #9B9B9B;
+}
+
+.add-icon-img {
+  width: 10px;
+  height: 12px;
+  margin: 3px 5px;
+}
+
+.accounts-days {
+  width: 120px;
+  height: 48px;
+  margin: 0 15px;
+  padding: 0 15px;
+  background-color: #F1F1F1;
+  border: 0px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.days-selector-btn {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #3E3E3E;
+  width: 100px;
+  height: 19px;
+  margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.days-selector-btn-icon-img {
+  width: 9px;
+  height: 6px;
+  margin: 7px 5px 0 50px;
+}
+
+.days-selector-wrapper {
+  border: 0px;
+  border-radius: 12px;
+  background-color: #FFF;
+  box-shadow: 3px 5px 8px 0px rgba(0,0,0, 0.2);
+  width: 8%;
+  min-width: 90px;
+  max-width: 142px;
+  padding: 2px 0;
+  position: absolute;
+  z-index: 1000;
+}
+
+.days-selector {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1650px) {
+  .side-bar-wrapper {
+    max-width: 380px;
+    min-width: 318px;
+  }
+
+  .add-submit-input {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 1512px) {
+  .accounts-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .accounts-left-column {
+    margin-top: 10px;
+    width: 95%;
+  }
+
+  .accounts-days {
+    margin: 0 15px;
+  }
+}
+
+@media screen and (min-width: 1261px) and (max-width: 1512px) {
+  .minor-section {
+    width: 48%;
+  }
+}
+
+@media screen and (max-width: 1260px) {
+  .side-bar-wrapper {
+    width: 35%;
+    min-width: 292px;
+    max-width: 350px;
+    position: fixed;
+    z-index: 10000;
+    box-shadow: 4px 0px 10px 0 rgba(0,0,0, 0.2);
+  }
+}
+
+@media screen and (max-width: 1047px) {
+  .main-section {
+    margin-top: 65px;
+  }
+
+  .sub-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .minor-section {
+    width: 80%;
+    max-width: 767px;
+    margin: 10px;
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1047px) {
+  .accounts-wrapper {
+    max-width: 600px;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .delete-btn, .add-btn {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .home-title, .home-subtitle, .show-days span {
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .main-section {
+    margin-top: 25px;
+  }
+
+  .sub-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .minor-section {
+    width: 80%;
+    max-width: 767px;
+    margin: 10px;
+  }
+
+  .budget-wrapper {
+    width: 80%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+  }
+
+  .add-submit-input {
+    font-size: 12px;
+    padding: 0 10px;
+    margin-right: 8px;
+  }
+
+  .days-selector-btn {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .minor-section {
+    width: 90%;
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .add-btn {
+    font-size: 14px;
+  }
+
+  .show-add-btn {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .home-title {
+    font-size: 12px;
+  }
+
+  .home-subtitle {
+    letter-spacing: 0.1px;
+    margin: 8px 0 18px 15px;
+    font-size: 12px;
+  }
+
+  .show-days span {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 358px) {
+  .minor-section {
+    min-width: 267px;
+  }
+
+  .accounts-days {
+    padding: 0 8px;
+    margin: 0 15px 0 5px;
+  }
+}
+

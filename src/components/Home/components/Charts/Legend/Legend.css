@@ -1,0 +1,85 @@
+.legend-list {
+  font-weight: 400;
+  color: #152A32;
+  width: 80%;
+  margin: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend-list-column-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend-list-column-right {
+  display: flex;
+  justify-content: center;
+}
+
+.legend-circle {
+  border-radius: 8px;
+  width: 9px;
+  height: 9px;
+  margin: 2px 8px 0 8px;
+  animation: jumpfadein 0.4s ease-in-out;
+}
+
+@keyframes
+  jumpfadein {
+    0% {
+      margin-bottom: -2px;
+      opacity: 0;
+    }
+    75% {
+      margin-bottom: 8px;
+      opacity: 1;
+    }
+    100% {
+      margin-bottom: 0px;
+      opacity: 1;
+    }
+  }
+
+.traffic-color {
+  background-color: #FBC2A2;
+}
+
+.food-color {
+  background-color: #7BF7C9;
+}
+
+.living-color {
+  background-color: #F1EFAB;
+}
+
+.ticket-color {
+  background-color: #ECA9FF;
+}
+
+.shopping-color {
+  background-color: #E488FC;
+}
+
+.legend-category {
+  letter-spacing: 2px;
+  margin-right: 15px;
+}
+
+.legend-cost {
+  letter-spacing: 0.5px;
+  margin-right: 15px;
+}
+
+.legend-percentage {
+  letter-spacing: 0.5px;
+  margin-right: 2px;
+}
+
+@media screen and (max-width: 575px) {
+  .legend-list {
+    width: 100%;
+  }
+}

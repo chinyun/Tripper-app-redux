@@ -1,0 +1,78 @@
+.app {
+	height: 125%;
+}
+
+.dashboard {
+  height: 100%;
+  background-color: #F9F9F9;
+}
+
+.dashboard button {
+  outline: none;
+}
+
+/*share css*/
+.web-info-wrapper {
+  height: 28px;
+  width: 90%;
+  max-width: 436px;
+  margin-top: 30px;
+  padding-left: 30px;
+}
+
+.web-info {
+  font-size: 13px;
+  letter-spacing: 0.1px;
+  font-weight: 400;
+  line-height: 19px;
+  color: rgba(0,0,0, 1);
+}
+
+.web-vital-info {
+  font-size: 12px;
+  letter-spacing: 0.1px;
+  line-height: 18px;
+  font-weight: 600;
+  text-align: justify;
+  text-justify: distribute;
+  color: rgba(62,62,62, 1);
+  margin: 10px;
+  max-width: 420px;
+}
+
+.web-vital-info span {
+  color: #F04A2D;
+}
+
+@media screen and (max-width: 1047px) {
+  .app {
+    height: 250%;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  button, input {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .app, .dashboard {
+    height: 270%;
+  }
+
+  .web-info-wrapper {
+    padding-left: 25px;
+  }
+    
+  .web-info {
+    font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .app, .dashboard {
+    height: 250%;
+  }
+}

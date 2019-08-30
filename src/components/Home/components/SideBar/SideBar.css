@@ -1,0 +1,54 @@
+.journeys-list-wrapper {
+	width: 100%;
+	padding-top: 20px;
+}
+
+.journeys-list {
+	margin: 0 5px;
+	padding: 0;
+}
+
+.add-journey-wrapper {
+	margin: 12px 0 0 10px;
+	padding: 5%;
+	display: flex;
+}
+
+.add-journey {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+}
+
+.add-journey-input {
+	width: 92%;
+	color: #3E3E3E;
+	background-color: #F0F0F0;
+	border-radius: 6px;
+	border: 1px solid #F0F0F0;
+	padding: 8px;
+}
+
+.add-journey-input::placeholder {
+	letter-spacing: 1px;
+	color: rgba(62,62,62, 0.6);
+}
+
+.add-journey-input:focus {
+	background-color: rgba(0, 0, 0,0.02);
+	border: 1px solid #177EF5;
+}
+
+.add-journey-btn-group {
+	margin-top: 7px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+@media screen and (max-width: 1049px) {
+	.journeys-list-wrapper {
+		padding-top: 35px;
+	}
+}

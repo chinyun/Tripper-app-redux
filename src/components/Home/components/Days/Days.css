@@ -1,0 +1,20 @@
+.days-option-btn {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #3E3E3E;
+  text-align: center;
+  width: 100%;
+  padding: 10px 10px;
+  transition: 0s;
+}
+
+.days-option-btn:hover {
+  color: #FFF;
+  background-color: #177EF5;
+}
+
+.days-option-btn:active {
+  color: #FFF;
+  background-color: #177EF5;
+}

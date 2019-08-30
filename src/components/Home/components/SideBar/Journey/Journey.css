@@ -1,0 +1,94 @@
+.journey {
+	width: 98%;
+	margin: 8px 0;
+	padding: 11px 0;
+	border-radius: 6px;
+	background-color: #FFF;
+	box-shadow: 3px 3px 7px 0px rgba(0,0,0, 0.1);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.change-display-journey-btn {
+	font-weight: 400;
+	color: #3E3E3E;
+	margin: 0 15px;
+	padding: 2px 0 2px 10px;
+	text-align: left;
+	max-width: 182px;
+}
+
+.change-display-journey-btn:hover {
+	font-weight: 500;
+	color: #177EF5;
+}
+
+.change-display-journey-btn:active {
+	font-weight: 500;
+	color: #9B9B9B;
+}
+
+.journey-name {
+	letter-spacing: 1px;
+}
+
+.journey-btn-group {
+	margin-right: 10px;
+	padding: 2px;
+	display: flex;
+	align-items: center;
+}
+
+.journey-btn-group .update-btn {
+	margin-right: 12px;
+}
+
+.journey-btn-group .cancel-btn {
+	margin: 0 8px 0 0;
+}
+
+.update-journey-input {
+	color: #3E3E3E;
+	width: 63%;
+	margin-left: 12px;
+	padding: 8px 0 8px 10px;
+	border-radius: 6px;
+	border: 0px;
+	background-color: #F0F0F0;
+}
+
+.update-journey-input::placeholder {
+	color: rgba(62,62,62, 0.6);
+	letter-spacing: 1px;
+}
+
+.update-journey-input:focus {
+	border: 1px solid #177EF5;
+	background-color: rgba(0, 0, 0,0.02);
+}
+
+@media screen and (max-width: 1650px) {
+  .journey-name {
+    letter-spacing: 0.2px;
+  }
+}
+
+@media screen and (max-width: 1047px) {
+  .change-display-journey-btn {
+    max-width: 160px;
+  }
+}
+
+@media screen and (min-width: 679px) and (max-width: 1047px) {
+  .journeys-list-wrapper {
+    padding-top: 48px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+	.journey {
+		margin: 5px 0;
+		padding: 8px 0;
+  }
+}

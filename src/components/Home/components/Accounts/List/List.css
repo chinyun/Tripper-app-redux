@@ -1,0 +1,179 @@
+.accounts-list-item-wrapper {
+	margin: 0;
+	width: 100%;
+}
+
+.accounts-list-item-update {
+	margin: 0;
+	width: 100%;
+	display: flex;
+}
+
+.accounts-list-item {
+	margin-bottom: 1%;
+	padding: 8px;
+	border-radius: 6px;
+	background-color: #FFF;
+	box-shadow: 2px 2px 8px 0px rgba(0,0,0, 0.1);
+	display: flex;
+	align-items: center;
+}
+
+.accounts-list-item button {
+	background: none;
+}
+
+.list-item-update {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.list-item-update input {
+	font-weight: 400;
+	color: rgba(62,62,62, 0.9);
+	background-color: #F2F2F2;
+	border: 1px solid rgba(0, 0, 0, 0);
+	border-radius: 6px;
+	margin-left: 4px;
+	padding: 5px;
+}
+
+.list-item-update input::placeholder {
+	letter-spacing: 0.5px;
+}
+
+.list-item-update input:focus {
+	background-color: rgba(0, 0, 0, 0.02);
+	border: 1px solid #3B93F7;
+}
+
+.item-detail-update-input {
+	width: 36%;
+}
+
+.item-amount-update-input {
+	width: 20%;
+}
+
+.delete-item {
+	margin: 5px;
+	display: flex;
+	flex-direction: flex-end;
+}
+
+.item-control-btn-group {
+	margin-left: 6px;
+	height: 50px;
+	display: flex;
+}
+
+.item-control-btn-wrapper {
+	margin: 15px 0 6px 6px;
+}
+
+.list-item-control-btn {
+  border-radius: 16px;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  transition: 0s;
+}
+
+.list-item-control-btn:hover {
+  background-color: #DDD;
+}
+
+.item-control-btn-group .cancel-btn-img {
+	width: 10px;
+}
+
+.confirm-btn-img {
+	width: 13px;
+	height: 11px;
+	margin: 7px 6px;
+}
+
+.list-item-group {
+	width: 90%;
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.list-item-category {
+	color: rgba(62,62,62,1);
+	width: 15%;
+	margin-left: 15px;
+}
+
+.list-item-detail {
+	color: rgba(113, 113, 113, 1);
+	width: 75%;
+	margin-left: 20px;
+}
+
+.list-item-amount {
+	color: rgba(113, 113, 113, 1);
+	margin-left: 20px;
+}
+
+@media screen and (min-width: 1261px) and (max-width: 1512px) {
+  .item-control-btn-wrapper {
+    margin-left: 2px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .list-item-group span {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .accounts-list-item {
+    margin-bottom: 8px;
+  }
+
+  .list-item-category {
+    margin-left: 8px;
+  }
+
+  .list-item-detail {
+    margin-left: 15px;
+  } 
+
+  .list-item-update {
+    flex-direction: column;
+  }
+
+  .list-item-update input {
+    margin: 4px;
+  }
+
+  .item-detail-update-input {
+    width: 90%;
+  }
+
+  .item-amount-update-input {
+    width: 90%;
+  }
+
+  .item-control-btn-group {
+    margin-top: 16%;
+  }
+
+  .item-control-btn-wrapper {
+    margin-left: 20%;
+  }
+}
+
+@media screen and (max-width: 358px) {
+  .list-item-detail {
+    margin-left: 10px;
+    width: 45%;
+  }
+}
+
