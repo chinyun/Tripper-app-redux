@@ -9,14 +9,12 @@ import './App.css';
 
 const mapStateToProps = (state) => {
   return {
-    isPending: state.requestLogIn.isPending,
-    user: state.requestLogIn.user,
-    journeys: state.requestLogIn.journeys,
-    initialJourney: state.requestLogIn.initialJourney,
-    journeyList: state.requestLogIn.journeyList,
-    route: state.requestLogIn.route,
-    isSignedIn: state.requestLogIn.isSignedIn,
-    error: state.requestLogIn.error
+    user: state.requestData.user,
+    journeys: state.requestData.journeys,
+    initialJourney: state.requestData.initialJourney,
+    journeyList: state.requestData.journeyList,
+    route: state.routeChange.route,
+    isSignedIn: state.requestLogIn.isSignedIn
   }
 }
 
@@ -73,15 +71,15 @@ class App extends Component {
     })
   };
 
-  addJourney = (newJourney) => {
-    this.setState({
-      journeys: [...this.state.journeys, newJourney[0]],
-      journeyList: [...this.state.journeyList, {
-        id: newJourney[0].id,
-        name: newJourney[0].name
-      }]
-    })
-  };
+  // addJourney = (newJourney) => {
+  //   this.setState({
+  //     journeys: [...this.state.journeys, newJourney[0]],
+  //     journeyList: [...this.state.journeyList, {
+  //       id: newJourney[0].id,
+  //       name: newJourney[0].name
+  //     }]
+  //   })
+  // };
 
   updateJourney = (journey) => {
     const index = this.state.journeyList.findIndex((item)=> item.id === journey[0].id);

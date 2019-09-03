@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import 'whatwg-fetch';
+import { addJourney } from './../../../../actions';
 import Journey from './Journey/Journey';
 import Url from './../../../Api/Api';
 import './SideBar.css';
@@ -9,17 +10,15 @@ import CancelIcon from './../../../../icons/cancel-dark-icon.png';
 
 const mapStateToProps = (state) => {
   return {
-    user: state.requestLogIn.user,
-    journeys: state.requestLogIn.journeys,
-    initialJourney: state.requestLogIn.initialJourney,
-    journeyList: state.requestLogIn.journeyList,
-    route: state.requestLogIn.route
+    journeys: state.requestData.journeys,
+    initialJourney: state.requestData.initialJourney,
+    journeyList: state.requestData.journeyList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // onRouteChange: (route) => dispatch(routeChange(route))
+    onAddJourney: (value, user) => dispatch(addJourney(value, user))
   }
 }
 
@@ -41,30 +40,11 @@ class SideBar extends Component {
 		}
 	};
 
-	createNewJourney = () => {
-		fetch(`${Url}/journeys`, {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				name: this.state.journeyValue,
-				budget: 0,
-        expense: 0,
-        traffic_budget: 0,
-        food_budget: 0,
-        living_budget: 0,
-        ticket_budget: 0,
-        shopping_budget: 0,
-        user_id: this.props.user.id
-			})
-		})
-		.then(response => response.json())
-		.then(newJourney => {
-			this.props.handleAddJourney(newJourney);
-			this.props.onJourneyChange(newJourney[0].id);
-			this.setState({ journeyValue: '' });
-			this.props.toggleActive('');
-		})
-		.catch(err => alert('unable to create'));
+	createNewJourney = (value, user) => {
+    this.props.onAddJourney(value, user);
+    this.props.handleAddJourney();
+    this.props.toggleActive('');
+    this.setState({ journeyValue: '' });
 	};
 
 	editJourneyName = (journeyId) => {
@@ -130,7 +110,7 @@ class SideBar extends Component {
 										className='add-submit-input'
 										type='submit' 
 										value='新增旅程'
-										onClick={() => this.createNewJourney()}
+										onClick={() => this.createNewJourney(this.state.journeyValue, this.props.user)}
 									/>
 									<button
 										className='cancel-btn'
@@ -152,6 +132,6 @@ class SideBar extends Component {
 			</div>
 		)
 	}
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

@@ -11,19 +11,6 @@ import Url from './../Api/Api';
 import './Home.css';
 import SelectIcon from '../../icons/select-black-icon.png';
 
-const mapStateToProps = (state) => {
-  return {
-    journeys: state.requestLogIn.journeys,
-    initialJourney: state.requestLogIn.initialJourney,
-    journeyList: state.requestLogIn.journeyList
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
-
 const getData = (datas) => {
   const total = datas[0].expense,
     traffic = datas[0].traffic_expense,
@@ -78,6 +65,19 @@ const getData = (datas) => {
   return data;
 };
 
+const mapStateToProps = (state) => {
+  return {
+    journeys: state.requestData.journeys,
+    initialJourney: state.requestData.initialJourney,
+    journeyList: state.requestData.journeyList
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +89,7 @@ class Home extends Component {
       expenseList: initialJourney[0].accountList[0].expenseList,
       journeyName: journeys[journeys.length-1].name,
       displayedAccountId: initialJourney[0].accountList[0].id,
-      displayedDay:initialJourney[0].accountList[0].name,
+      displayedDay: initialJourney[0].accountList[0].name,
       countDays: initialJourney[0].accountList.length,
       data: getData(initialJourney),
       currentTotalBudget: + initialJourney[0].traffic_budget + + initialJourney[0].food_budget
@@ -118,7 +118,7 @@ class Home extends Component {
 
   onDayChange = (id) => {
     const day = this.state.accounts.filter(item => item.id === id);
-    this.setState({ 
+    this.setState({
       expenseList: day[0].expenseList,
       displayedAccountId: day[0].id,
       displayedDay: day[0].name,
@@ -126,11 +126,19 @@ class Home extends Component {
     });
   };
 
-  handleAddJourney = (newJourney) => {
-    const { addJourney, journeys } = this.props;
-    addJourney(newJourney);
+  handleAddJourney = () => {
+    const { journeys } = this.props;
+    // this.props.addJourney(newJourney);
     this.setState({
-      displayedDay: journeys[journeys.length-1].accountList[0].name
+      journeyId: journeys[journeys.length-1].id,
+      displayedJourney: [journeys[journeys.length-1]],
+      accounts: journeys[journeys.length-1].accountList,
+      expenseList: journeys[journeys.length-1].accountList[0].expenseList,
+      journeyName: journeys[journeys.length-1].name,
+      displayedAccountId: journeys[journeys.length-1].accountList[0].id,
+      displayedDay: journeys[journeys.length-1].accountList[0].name,
+      countDays: journeys[journeys.length-1].accountList.length,
+      data: getData([journeys[journeys.length-1]])
     })
   };
 
