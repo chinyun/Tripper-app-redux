@@ -1,11 +1,12 @@
 import {
-  REQUEST_LOGIN_PENDING,
-  REQUEST_LOGIN_SUCCESS,
-  REQUEST_LOGIN_FAILED,
   ROUTE_CHANGE,
-  REQUEST_ADD_JOURNEY_PENDING,
+  REQUEST_LOGIN_PENDING,
+  REQUEST_LOGIN_FAILED,
+  REQUEST_LOGIN_SUCCESS,
+  REQUEST_DATA_PENDING,
+  REQUEST_DATA_FAILED,
   REQUEST_ADD_JOURNEY_SUCCESS,
-  REQUEST_ADD_JOURNEY_FAILED
+  REQUEST_UPDATE_JOURNEY_SUCCESS
 } from './constants.js';
 
 const Url = 'http://localhost:3000';
@@ -59,7 +60,7 @@ export const routeChange = (route) => ({
 })
 
 export const addJourney = (value, user) => (dispatch) => {
-  dispatch({ type: REQUEST_ADD_JOURNEY_PENDING });
+  dispatch({ type: REQUEST_DATA_PENDING });
   fetch(`${Url}/journeys`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -77,11 +78,34 @@ export const addJourney = (value, user) => (dispatch) => {
   })
   .then(response => response.json())
   .then(newJourney => {
-    dispatch({ type: REQUEST_ADD_JOURNEY_SUCCESS, payload: newJourney })
+    if (newJourney) {
+      dispatch({ type: REQUEST_ADD_JOURNEY_SUCCESS, payload: newJourney })
+    } else {
+      alert('unable to create');
+    }
   })
-  .catch(error => {
-    dispatch({ type: REQUEST_ADD_JOURNEY_FAILED, payload: error });
-    alert('unable to create');
-  })
+  .catch(error => dispatch({ type: REQUEST_DATA_FAILED, payload: error }))
 }
 
+export const editJourneyName = (id, value, index) => (dispatch) => {
+  console.log(index);
+  dispatch({ type: REQUEST_DATA_PENDING });
+  fetch(`${Url}/journeys/${id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      name: value
+    })
+  })
+  .then(response => response.json())
+  .then(journey => {
+    const data = [...journey, { index: index }];
+    console.log(data);
+    if (journey) {
+      dispatch({ type: REQUEST_UPDATE_JOURNEY_SUCCESS, payload: data })
+    } else {
+      alert('unable to edit')
+    }
+  })
+  .catch(error => dispatch({ type: REQUEST_DATA_FAILED, payload: error }))
+}

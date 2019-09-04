@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import 'whatwg-fetch';
-import { addJourney } from './../../../../actions';
+import { addJourney, editJourneyName } from './../../../../actions';
 import Journey from './Journey/Journey';
 import Url from './../../../Api/Api';
 import './SideBar.css';
@@ -18,7 +18,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddJourney: (value, user) => dispatch(addJourney(value, user))
+    onAddJourney: (value, user) => dispatch(addJourney(value, user)),
+    onEditJourneyName: (id, value, index) => dispatch(editJourneyName(id, value, index))
   }
 }
 
@@ -34,12 +35,6 @@ class SideBar extends Component {
 		this.setState({ journeyValue: value })
 	};
 
-	handleEnter = (event) => {
-		if (event.key === 'Enter') {
-			this.createNewJourney();
-		}
-	};
-
 	createNewJourney = (value, user) => {
     this.props.onAddJourney(value, user);
     this.props.handleAddJourney();
@@ -47,21 +42,35 @@ class SideBar extends Component {
     this.setState({ journeyValue: '' });
 	};
 
+	handleEnter = (event) => {
+		if (event.key === 'Enter') {
+			this.createNewJourney();
+		}
+	};
+
 	editJourneyName = (journeyId) => {
-    fetch(`${Url}/journeys/${journeyId}`, {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        name: this.state.journeyValue
-      })
-    })
-    .then(response => response.json())
-    .then(journey => {
-      this.props.updateJourney(journey);
+    const index = this.props.journeyList.findIndex((item)=> item.id === journeyId);
+    if (index !== -1) {
+      this.props.onEditJourneyName(journeyId, this.state.journeyValue, index);
       this.props.onJourneyChange(journeyId);
       this.setState({ journeyValue: '' })
-    })
-    .catch(err => alert('unable to edit'));
+    }
+    // this.props.updateJourney(journey);
+    
+    // fetch(`${Url}/journeys/${journeyId}`, {
+    //   method: 'PATCH',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify({
+    //     name: this.state.journeyValue
+    //   })
+    // })
+    // .then(response => response.json())
+    // .then(journey => {
+    //   this.props.updateJourney(journey);
+    //   this.props.onJourneyChange(journeyId);
+    //   this.setState({ journeyValue: '' })
+    // })
+    // .catch(err => alert('unable to edit'));
   };
 
 	deleteJourney = ( delJourneyId ) => {

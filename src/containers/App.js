@@ -81,23 +81,23 @@ class App extends Component {
   //   })
   // };
 
-  updateJourney = (journey) => {
-    const index = this.state.journeyList.findIndex((item)=> item.id === journey[0].id);
-    if (index !== -1) {
-      this.setState({
-        journeys: [
-          ...this.state.journeys.slice(0, index),
-          Object.assign({}, this.state.journeys[index], journey[0]),
-          ...this.state.journeys.slice(index + 1)
-        ],
-        journeyList: [
-          ...this.state.journeyList.slice(0, index),
-           Object.assign({}, this.state.journeyList[index], journey[1]),
-           ...this.state.journeyList.slice(index + 1)
-        ]
-      });
-    }
-  };
+  // updateJourney = (journey) => {
+  //   const index = this.state.journeyList.findIndex((item)=> item.id === journey[0].id);
+  //   if (index !== -1) {
+  //     this.setState({
+  //       journeys: [
+  //         ...this.state.journeys.slice(0, index),
+  //         Object.assign({}, this.state.journeys[index], journey[0]),
+  //         ...this.state.journeys.slice(index + 1)
+  //       ],
+  //       journeyList: [
+  //         ...this.state.journeyList.slice(0, index),
+  //          Object.assign({}, this.state.journeyList[index], journey[1]),
+  //          ...this.state.journeyList.slice(index + 1)
+  //       ]
+  //     });
+  //   }
+  // };
 
   updateBudgets = (journey, journeyId) => {
     const index = this.state.journeyList.findIndex(item => item.id === journeyId);
@@ -209,7 +209,7 @@ class App extends Component {
               </header>
               <Home
                 // initialJourney={journeys.filter(item => item.id === journeys[journeys.length-1].id)}
-                addJourney={this.addJourney}
+                // addJourney={this.addJourney}
                 updateJourney={this.updateJourney}
                 updateBudgets={this.updateBudgets}
                 removeJourney={this.removeJourney}

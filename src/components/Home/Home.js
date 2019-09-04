@@ -128,7 +128,6 @@ class Home extends Component {
 
   handleAddJourney = () => {
     const { journeys } = this.props;
-    // this.props.addJourney(newJourney);
     this.setState({
       journeyId: journeys[journeys.length-1].id,
       displayedJourney: [journeys[journeys.length-1]],
@@ -295,11 +294,8 @@ class Home extends Component {
         >
           <div className='side-bar'>
             <SideBar
-              // user={this.props.user}
-              // journeyList={this.props.journeyList}
               onJourneyChange={this.onJourneyChange}
               handleAddJourney={this.handleAddJourney}
-              updateJourney={this.props.updateJourney}
               handleRemoveJourney={this.handleRemoveJourney}
               isActived={this.props.isActived}
               toggleActive={this.props.toggleActive}

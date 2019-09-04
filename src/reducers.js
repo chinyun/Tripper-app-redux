@@ -1,11 +1,12 @@
 import {
-  REQUEST_LOGIN_PENDING,
-  REQUEST_LOGIN_SUCCESS,
-  REQUEST_LOGIN_FAILED,
   ROUTE_CHANGE,
-  REQUEST_ADD_JOURNEY_PENDING,
+  REQUEST_LOGIN_PENDING,
+  REQUEST_LOGIN_FAILED,
+  REQUEST_LOGIN_SUCCESS,
+  REQUEST_DATA_PENDING,
+  REQUEST_DATA_FAILED,
   REQUEST_ADD_JOURNEY_SUCCESS,
-  REQUEST_ADD_JOURNEY_FAILED
+  REQUEST_UPDATE_JOURNEY_SUCCESS
 } from './constants.js';
 
 const initialStateRoute = {
@@ -60,6 +61,12 @@ const initialStateData = {
 
 export const requestData  = (state = initialStateData, action = {}) => {
   switch(action.type) {
+    case REQUEST_DATA_PENDING:
+      return Object.assign({}, state, { isPending: true })
+
+    case REQUEST_DATA_FAILED:
+      return Object.assign({}, state, { error: action.payload, isPending: false })
+
     case REQUEST_LOGIN_SUCCESS:
       return Object.assign({}, state, { 
         isPending: false,
@@ -73,21 +80,33 @@ export const requestData  = (state = initialStateData, action = {}) => {
           }
         })
       })
-    case REQUEST_ADD_JOURNEY_PENDING:
-      return Object.assign({}, state, { isPending: true })
+
     case REQUEST_ADD_JOURNEY_SUCCESS:
       return Object.assign({}, state, {
-        isPending: false, 
+        isPending: false,
         journeys: [...state.journeys, action.payload[0]],
         journeyList: [...state.journeyList, {
           id: action.payload[0].id,
           name: action.payload[0].name
         }]
       })
-    case REQUEST_ADD_JOURNEY_FAILED:
-      return Object.assign({}, state, { error: action.payload, isPending: false })
+
+    case REQUEST_UPDATE_JOURNEY_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload[2].index ),
+          Object.assign({}, state.journeys[action.payload[2].index], action.payload[0]),
+          ...state.journeys.slice(action.payload[2].index + 1)
+        ],
+        journeyList: [
+          ...state.journeyList.slice(0, action.payload[2].index),
+           Object.assign({}, state.journeyList[action.payload[2].index], action.payload[1]),
+           ...state.journeyList.slice(action.payload[2].index + 1)
+        ]
+      })
+
     default:
       return state;
   }
 }
-
