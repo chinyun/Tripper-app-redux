@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import 'whatwg-fetch';
-import { addJourney, editJourneyName } from './../../../../actions';
+import { addJourney, editJourneyName, deleteJourney } from './../../../../actions';
 import Journey from './Journey/Journey';
-import Url from './../../../Api/Api';
 import './SideBar.css';
 import AddIcon from './../../../../icons/add-blue-icon.png'; 
 import CancelIcon from './../../../../icons/cancel-dark-icon.png';
@@ -19,7 +18,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddJourney: (value, user) => dispatch(addJourney(value, user)),
-    onEditJourneyName: (id, value, index) => dispatch(editJourneyName(id, value, index))
+    onEditJourneyName: (id, value, index) => dispatch(editJourneyName(id, value, index)),
+    onDeleteJourney: (id, index) => dispatch(deleteJourney(id, index))
   }
 }
 
@@ -55,33 +55,14 @@ class SideBar extends Component {
       this.props.onJourneyChange(journeyId);
       this.setState({ journeyValue: '' })
     }
-    // this.props.updateJourney(journey);
-    
-    // fetch(`${Url}/journeys/${journeyId}`, {
-    //   method: 'PATCH',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify({
-    //     name: this.state.journeyValue
-    //   })
-    // })
-    // .then(response => response.json())
-    // .then(journey => {
-    //   this.props.updateJourney(journey);
-    //   this.props.onJourneyChange(journeyId);
-    //   this.setState({ journeyValue: '' })
-    // })
-    // .catch(err => alert('unable to edit'));
   };
 
 	deleteJourney = ( delJourneyId ) => {
-		fetch(`${Url}/journeys/${delJourneyId}`, {
-			method: 'DELETE',
-		})
-		.then(response => response.json())
-		.then(updatedJourney=> {
-			this.props.handleRemoveJourney(updatedJourney, delJourneyId);
-		})
-		.catch(err => alert('unable to delete'));
+    const index = this.props.journeyList.findIndex(item => item.id === delJourneyId);
+    if(index !== -1) {
+      this.props.onDeleteJourney(delJourneyId, index);
+      this.props.handleDeleteJourney();
+    }
 	};
 
 	render( ) {

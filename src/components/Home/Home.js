@@ -151,8 +151,7 @@ class Home extends Component {
     })
   };
 
-  handleRemoveJourney = (updatedJourney, delJourneyId) => {
-    this.props.removeJourney(updatedJourney, delJourneyId);
+  handleDeleteJourney = () => {
     const {journeys, initialJourney} = this.props;
     this.setState({
       journeyId: journeys[journeys.length-1].id,
@@ -296,7 +295,7 @@ class Home extends Component {
             <SideBar
               onJourneyChange={this.onJourneyChange}
               handleAddJourney={this.handleAddJourney}
-              handleRemoveJourney={this.handleRemoveJourney}
+              handleDeleteJourney={this.handleDeleteJourney}
               isActived={this.props.isActived}
               toggleActive={this.props.toggleActive}
               isEditing={this.props.isEditing}

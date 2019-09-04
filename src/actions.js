@@ -6,7 +6,8 @@ import {
   REQUEST_DATA_PENDING,
   REQUEST_DATA_FAILED,
   REQUEST_ADD_JOURNEY_SUCCESS,
-  REQUEST_UPDATE_JOURNEY_SUCCESS
+  REQUEST_UPDATE_JOURNEY_SUCCESS,
+  REQUEST_DELETE_JOURNEY_SUCCESS
 } from './constants.js';
 
 const Url = 'http://localhost:3000';
@@ -88,7 +89,6 @@ export const addJourney = (value, user) => (dispatch) => {
 }
 
 export const editJourneyName = (id, value, index) => (dispatch) => {
-  console.log(index);
   dispatch({ type: REQUEST_DATA_PENDING });
   fetch(`${Url}/journeys/${id}`, {
     method: 'PATCH',
@@ -100,7 +100,6 @@ export const editJourneyName = (id, value, index) => (dispatch) => {
   .then(response => response.json())
   .then(journey => {
     const data = [...journey, { index: index }];
-    console.log(data);
     if (journey) {
       dispatch({ type: REQUEST_UPDATE_JOURNEY_SUCCESS, payload: data })
     } else {
@@ -108,4 +107,22 @@ export const editJourneyName = (id, value, index) => (dispatch) => {
     }
   })
   .catch(error => dispatch({ type: REQUEST_DATA_FAILED, payload: error }))
+}
+
+export const deleteJourney = (id, index) => (dispatch) => {
+  dispatch({ type: REQUEST_DATA_PENDING });
+  fetch(`${Url}/journeys/${id}`, {
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(journeys => {
+      const data = [...journeys, { index: index }];
+      console.log(data);
+      if (journeys) {
+        dispatch({ type: REQUEST_DELETE_JOURNEY_SUCCESS, payload: data })
+      } else {
+         alert('unable to delete')
+      }
+    })
+    .catch(error => dispatch({ type: REQUEST_DATA_FAILED, payload: error }));
 }

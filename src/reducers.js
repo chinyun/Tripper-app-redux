@@ -6,7 +6,8 @@ import {
   REQUEST_DATA_PENDING,
   REQUEST_DATA_FAILED,
   REQUEST_ADD_JOURNEY_SUCCESS,
-  REQUEST_UPDATE_JOURNEY_SUCCESS
+  REQUEST_UPDATE_JOURNEY_SUCCESS,
+  REQUEST_DELETE_JOURNEY_SUCCESS
 } from './constants.js';
 
 const initialStateRoute = {
@@ -95,7 +96,7 @@ export const requestData  = (state = initialStateData, action = {}) => {
       return Object.assign({}, state, {
         isPending: false,
         journeys: [
-          ...state.journeys.slice(0, action.payload[2].index ),
+          ...state.journeys.slice(0, action.payload[2].index),
           Object.assign({}, state.journeys[action.payload[2].index], action.payload[0]),
           ...state.journeys.slice(action.payload[2].index + 1)
         ],
@@ -103,6 +104,19 @@ export const requestData  = (state = initialStateData, action = {}) => {
           ...state.journeyList.slice(0, action.payload[2].index),
            Object.assign({}, state.journeyList[action.payload[2].index], action.payload[1]),
            ...state.journeyList.slice(action.payload[2].index + 1)
+        ]
+      })
+
+    case REQUEST_DELETE_JOURNEY_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload[action.payload.length - 1].index),
+          ...state.journeys.slice(action.payload[action.payload.length - 1].index + 1)
+        ],
+        journeyList: [
+          ...state.journeyList.slice(0, action.payload[action.payload.length - 1].index),
+          ...state.journeyList.slice(action.payload[action.payload.length - 1].index + 1)
         ]
       })
 

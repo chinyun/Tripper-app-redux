@@ -112,34 +112,34 @@ class App extends Component {
     }
   };
 
-  removeJourney = (updatedJourney, delJourneyId) => {
-    const index = this.state.journeyList.findIndex(item => item.id === delJourneyId);
-    if(index !== -1) {
-      this.setState({
-        journeys: [
-          ...this.state.journeys.slice(0, index),
-          ...this.state.journeys.slice(index + 1)
-        ],
-        journeyList: [
-          ...this.state.journeyList.slice(0, index),
-          ...this.state.journeyList.slice(index + 1)
-        ]
-      })
-    }
-  };
+  // removeJourney = (updatedJourney, delJourneyId) => {
+  //   const index = this.state.journeyList.findIndex(item => item.id === delJourneyId);
+  //   if(index !== -1) {
+  //     this.setState({
+  //       journeys: [
+  //         ...this.state.journeys.slice(0, index),
+  //         ...this.state.journeys.slice(index + 1)
+  //       ],
+  //       journeyList: [
+  //         ...this.state.journeyList.slice(0, index),
+  //         ...this.state.journeyList.slice(index + 1)
+  //       ]
+  //     })
+  //   }
+  // };
 
-  addAccount = (updatedJourney) => {
-    const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
-    if (index !== -1) {
-      this.setState({
-        journeys: [
-          ...this.state.journeys.slice(0, index),
-          Object.assign({}, this.state.journeys[index], updatedJourney[0]),
-          ...this.state.journeys.slice(index + 1)
-        ]
-      })
-    }
-  };
+  // addAccount = (updatedJourney) => {
+  //   const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
+  //   if (index !== -1) {
+  //     this.setState({
+  //       journeys: [
+  //         ...this.state.journeys.slice(0, index),
+  //         Object.assign({}, this.state.journeys[index], updatedJourney[0]),
+  //         ...this.state.journeys.slice(index + 1)
+  //       ]
+  //     })
+  //   }
+  // };
 
   removeAccount = (updatedJourney) => {
     const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
@@ -210,10 +210,10 @@ class App extends Component {
               <Home
                 // initialJourney={journeys.filter(item => item.id === journeys[journeys.length-1].id)}
                 // addJourney={this.addJourney}
-                updateJourney={this.updateJourney}
+                // updateJourney={this.updateJourney}
                 updateBudgets={this.updateBudgets}
-                removeJourney={this.removeJourney}
-                addAccount={this.addAccount}
+                // removeJourney={this.removeJourney}
+                // addAccount={this.addAccount}
                 removeAccount={this.removeAccount}
                 addExpense={this.addExpense}
                 updateExpense={this.updateExpense}
