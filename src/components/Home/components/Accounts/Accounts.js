@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import 'whatwg-fetch';
+import { addExpense, deleteExpense } from './../../../../actions';
 import Scroll from './Scroll/Scroll';
 import List from './List/List';
 import Category from './Category/Category.js';
@@ -7,6 +9,22 @@ import Url from './../../../Api/Api';
 import './Accounts.css';
 import AddIcon from './../../../../icons/add-blue-icon.png'; 
 import CancelIcon from './../../../../icons/cancel-dark-icon.png';
+
+const mapStateToProps = (state) => {
+	return {
+		journeyId: state.requestData.journeyId,
+		journeyList: state.requestData.journeyList,
+		displayedDayId: state.requestData.displayedDayId,
+		expenseList: state.requestData.expenseList
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onCreateNewExpense: (value, index) => dispatch(addExpense(value, index)),
+		onDeleteExpense: (list, id, index) => dispatch(deleteExpense(list, id, index))
+	}
+}
 
 class Accounts extends Component {
 	constructor(props) {
@@ -19,54 +37,36 @@ class Accounts extends Component {
 		};
 	};
 
-  handleEnter = (event) => {
+	createNewExpense = () => {
+		const value = {
+			category: this.state.category,
+			detail: this.state.detail,
+			amount: this.state.amount,
+			id: this.props.displayedDayId
+		}
+		const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
+    if (index !== -1) {
+     this.props.onCreateNewExpense(value, index);
+     this.setState({
+				category: '交通',
+				detail: '',
+				amount: ''
+			});
+			this.props.toggleActive('');
+    }
+	};
+
+	handleEnter = (event) => {
 		if (event.keyCode === 13) {
 			this.createNewExpense();
 		}
 	};
 
-	createNewExpense = () => {
-		fetch(`${Url}/expenses`, {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				category: this.state.category,
-				detail: this.state.detail,
-				amount: this.state.amount,
-				account_id: this.props.displayedAccountId
-			})
-		})
-		.then(response => response.json())
-		.then(updatedJourney => {
-			this.props.handleAddExpense(updatedJourney, this.props.displayedAccountId);
-		})
-		.catch(err => alert('unable to add expense'));
-
-		this.setState({
-			category: '交通',
-			detail: '',
-			amount: ''
-		});
-
-		this.props.toggleActive('');
-	};
-
 	deleteExpense = (list) => {
-		fetch(`${Url}/expenses/${list.id}`, {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				category: list.category,
-				detail: list.detail,
-				amount: list.amount,
-				account_id: list.account_id
-			})
-    })
-    .then(response => response.json())
-    .then(updatedJourney => {
-    	this.props.handleRemoveExpense(updatedJourney);
-    })
-    .catch(err => alert('unable to delete'));
+		const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
+    if (index !== -1) {
+    	this.props.onDeleteExpense(list, this.props.displayedDayId, index)
+    }
 	};
 
   componentDidMount = () => {
@@ -196,4 +196,4 @@ class Accounts extends Component {
 	}
 }
 
-export default Accounts;
+export default connect(mapStateToProps, mapDispatchToProps)(Accounts);

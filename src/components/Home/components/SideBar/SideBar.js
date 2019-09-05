@@ -9,6 +9,7 @@ import CancelIcon from './../../../../icons/cancel-dark-icon.png';
 
 const mapStateToProps = (state) => {
   return {
+    user: state.requestData.user,
     journeys: state.requestData.journeys,
     initialJourney: state.requestData.initialJourney,
     journeyList: state.requestData.journeyList
@@ -37,14 +38,13 @@ class SideBar extends Component {
 
 	createNewJourney = (value, user) => {
     this.props.onAddJourney(value, user);
-    this.props.handleAddJourney();
     this.props.toggleActive('');
     this.setState({ journeyValue: '' });
 	};
 
-	handleEnter = (event) => {
+	handleEnter = (event, value, user) => {
 		if (event.key === 'Enter') {
-			this.createNewJourney();
+			this.createNewJourney(value, user);
 		}
 	};
 
@@ -61,7 +61,6 @@ class SideBar extends Component {
     const index = this.props.journeyList.findIndex(item => item.id === delJourneyId);
     if(index !== -1) {
       this.props.onDeleteJourney(delJourneyId, index);
-      this.props.handleDeleteJourney();
     }
 	};
 
@@ -92,7 +91,7 @@ class SideBar extends Component {
 									placeholder='新增行程表'
 									value={this.state.journeyValue}
 									onChange={(event) => this.onValueChange(event.target.value)}
-									onKeyDown={this.handleEnter}
+									onKeyDown={(event) => this.handleEnter(event, this.state.journeyValue, this.props.user)}
 								/>
 								<div className='add-journey-btn-group'>
 									<input 

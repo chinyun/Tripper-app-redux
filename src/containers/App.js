@@ -141,31 +141,31 @@ class App extends Component {
   //   }
   // };
 
-  removeAccount = (updatedJourney) => {
-    const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
-    if (index !== -1) {
-      this.setState({
-        journeys: [
-          ...this.state.journeys.slice(0, index),
-          Object.assign({}, this.state.journeys[index], updatedJourney[0]),
-          ...this.state.journeys.slice(index + 1)
-        ]
-      })
-    }
-  };
+  // removeAccount = (updatedJourney) => {
+  //   const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
+  //   if (index !== -1) {
+  //     this.setState({
+  //       journeys: [
+  //         ...this.state.journeys.slice(0, index),
+  //         Object.assign({}, this.state.journeys[index], updatedJourney[0]),
+  //         ...this.state.journeys.slice(index + 1)
+  //       ]
+  //     })
+  //   }
+  // };
 
-  addExpense = (updatedJourney) => {
-    const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
-    if (index !== -1) {
-      this.setState({
-        journeys: [
-          ...this.state.journeys.slice(0, index),
-          Object.assign({}, this.state.journeys[index], updatedJourney[0]),
-          ...this.state.journeys.slice(index + 1)
-        ]
-      })
-    }
-  };
+  // addExpense = (updatedJourney) => {
+  //   const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);
+  //   if (index !== -1) {
+  //     this.setState({
+  //       journeys: [
+  //         ...this.state.journeys.slice(0, index),
+  //         Object.assign({}, this.state.journeys[index], updatedJourney[0]),
+  //         ...this.state.journeys.slice(index + 1)
+  //       ]
+  //     })
+  //   }
+  // };
 
   updateExpense = (updatedJourney) => {
     const index = this.state.journeyList.findIndex(item => item.id === updatedJourney[0].id);

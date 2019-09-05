@@ -7,8 +7,16 @@ import {
   REQUEST_DATA_FAILED,
   REQUEST_ADD_JOURNEY_SUCCESS,
   REQUEST_UPDATE_JOURNEY_SUCCESS,
-  REQUEST_DELETE_JOURNEY_SUCCESS
+  REQUEST_DELETE_JOURNEY_SUCCESS,
+  JOURNEY_CHANGE,
+  REQUEST_ADD_DAY_SUCCESS,
+  REQUEST_DELETE_DAY_SUCCESS,
+  DAY_CHANGE,
+  REQUEST_ADD_EXPENSE_SUCCESS,
+  REQUEST_DELETE_EXPENSE_SUCCESS
 } from './constants.js';
+
+import { getData } from './getdata.js';
 
 const initialStateRoute = {
   route: 'landing'
@@ -57,7 +65,17 @@ const initialStateData = {
   journeys: [],
   initialJourney: {},
   journeyList: [],
-  error: ''
+  error: '',
+  journeyId: '',
+  displayedJourney: {},
+  accounts: [],
+  expenseList: [],
+  journeyName: '',
+  displayedDayId: '',
+  displayedDay: '',
+  countDays: 0,
+  data: [],
+  currentTotalBudget: 0
 }
 
 export const requestData  = (state = initialStateData, action = {}) => {
@@ -71,10 +89,20 @@ export const requestData  = (state = initialStateData, action = {}) => {
     case REQUEST_LOGIN_SUCCESS:
       return Object.assign({}, state, { 
         isPending: false,
-        user: action.payload.pop(1),
-        journeys: action.payload,
-        initialJourney: action.payload.filter(item => item.id === action.payload[action.payload.length-1].id),
-        journeyList: action.payload.map(item => {
+        journeyId: action.payload.initialJourney[0].id,
+        accounts: action.payload.initialJourney[0].accountList,
+        expenseList: action.payload.initialJourney[0].accountList[action.payload.len].expenseList,
+        journeyName: action.payload.initialJourney[0].name,
+        displayedDayId: action.payload.initialJourney[0].accountList[action.payload.len].id,
+        displayedDay: action.payload.initialJourney[0].accountList[action.payload.len].name,
+        countDays: action.payload.len + 1,
+        data: getData(action.payload.initialJourney),
+        currentTotalBudget: 0,
+        displayedJourney: action.payload.initialJourney,
+        initialJourney: action.payload.initialJourney,
+        user: action.payload.user,
+        journeys: action.payload.data,
+        journeyList: action.payload.data.map(item => {
           return {
             id: item.id,
             name: item.name
@@ -89,35 +117,133 @@ export const requestData  = (state = initialStateData, action = {}) => {
         journeyList: [...state.journeyList, {
           id: action.payload[0].id,
           name: action.payload[0].name
-        }]
+        }],
+        journeyId: action.payload[0].id,
+        displayedJourney: action.payload,
+        accounts: action.payload[0].accountList,
+        expenseList: action.payload[0].accountList[0].expenseList,
+        journeyName: action.payload[0].name,
+        displayedDayId: action.payload[0].accountList[0].id,
+        displayedDay: action.payload[0].accountList[0].name,
+        countDays: action.payload[0].accountList.length,
+        data: getData(action.payload)
       })
 
     case REQUEST_UPDATE_JOURNEY_SUCCESS:
       return Object.assign({}, state, {
         isPending: false,
         journeys: [
-          ...state.journeys.slice(0, action.payload[2].index),
-          Object.assign({}, state.journeys[action.payload[2].index], action.payload[0]),
-          ...state.journeys.slice(action.payload[2].index + 1)
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.journeys),
+          ...state.journeys.slice(action.payload.index + 1)
         ],
         journeyList: [
-          ...state.journeyList.slice(0, action.payload[2].index),
-           Object.assign({}, state.journeyList[action.payload[2].index], action.payload[1]),
-           ...state.journeyList.slice(action.payload[2].index + 1)
+          ...state.journeyList.slice(0, action.payload.index),
+           Object.assign({}, state.journeyList[action.payload.index], action.payload.journeyList),
+           ...state.journeyList.slice(action.payload.index + 1)
         ]
+      })
+
+    case JOURNEY_CHANGE:
+      return Object.assign({}, state, {
+        journeyId: action.payload.data[0].id,
+        displayedJourney: action.payload.data,
+        accounts: action.payload.data[0].accountList,
+        expenseList: action.payload.data[0].accountList[action.payload.len].expenseList,
+        journeyName: action.payload.data[0].name,
+        displayedDayId: action.payload.data[0].accountList[action.payload.len].id,
+        displayedDay: action.payload.data[0].accountList[action.payload.len].name,
+        countDays: action.payload.len + 1,
+        data: getData(action.payload.data)
       })
 
     case REQUEST_DELETE_JOURNEY_SUCCESS:
       return Object.assign({}, state, {
         isPending: false,
         journeys: [
-          ...state.journeys.slice(0, action.payload[action.payload.length - 1].index),
-          ...state.journeys.slice(action.payload[action.payload.length - 1].index + 1)
+          ...state.journeys.slice(0, action.payload.index),
+          ...state.journeys.slice(action.payload.index + 1)
         ],
         journeyList: [
-          ...state.journeyList.slice(0, action.payload[action.payload.length - 1].index),
-          ...state.journeyList.slice(action.payload[action.payload.length - 1].index + 1)
-        ]
+          ...state.journeyList.slice(0, action.payload.index),
+          ...state.journeyList.slice(action.payload.index + 1)
+        ],
+        journeyId: action.payload.data[action.payload.len].id,
+        displayedJourney: action.payload.data[action.payload.len],
+        accounts: action.payload.data[action.payload.len].accountList,
+        expenseList: action.payload.data[action.payload.len].accountList[action.payload.accountLen].expenseList,
+        journeyName: action.payload.data[action.payload.len].name,
+        displayedDayId: action.payload.data[action.payload.len].accountList[action.payload.accountLen].id,
+        displayedDay: action.payload.data[action.payload.len].accountList[action.payload.accountLen].name,
+        countDays: action.payload.data[action.payload.len].accountList.length,
+        data: getData(action.payload.data[action.payload.len])
+      })
+
+    case REQUEST_ADD_DAY_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        displayedJourney: action.payload.data,
+        accounts: action.payload.data[0].accountList,
+        expenseList: action.payload.newAccount[0].expenseList,
+        displayedDayId: action.payload.newAccount[0].id,
+        displayedDay: action.payload.newAccount[0].name,
+        countDays: action.payload.data[0].accountList.length,
+        data: getData(action.payload.data)
+      })
+
+    case REQUEST_DELETE_DAY_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        accounts: action.payload.data[0].accountList,
+        expenseList: action.payload.data[0].accountList[action.payload.len].expenseList,
+        displayedDayId: action.payload.data[0].accountList[action.payload.len].id,
+        displayedDay: action.payload.data[0].accountList[action.payload.len].name,
+        countDays: action.payload.len + 1
+      })
+
+    case DAY_CHANGE:
+      return Object.assign({}, state, {
+        expenseList: action.payload[0].expenseList,
+        displayedDayId: action.payload[0].id,
+        displayedDay: action.payload[0].name,
+      })
+
+    case REQUEST_ADD_EXPENSE_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        displayedJourney: action.payload.data,
+        accounts: action.payload.data[0].accountList,
+        expenseList: action.payload.targetAccount[0].expenseList,
+        data: getData(action.payload.data)
+      })
+
+    case REQUEST_DELETE_EXPENSE_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        displayedJourney: action.payload.data,
+        accounts: action.payload.data[0].accountList,
+        expenseList: action.payload.targetAccount[0].expenseList,
+        data: getData(action.payload.data)
       })
 
     default:
