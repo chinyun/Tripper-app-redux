@@ -8,7 +8,6 @@ import SetBudget from './components/SetBudget/SetBudget';
 import Accounts from './components/Accounts/Accounts';
 import Charts from './components/Charts/Charts';
 import Days from './components/Days/Days';
-import { getData } from './../../getdata.js';
 import './Home.css';
 import SelectIcon from '../../icons/select-black-icon.png';
 
@@ -62,16 +61,6 @@ class Home extends Component {
     });
   };
 
-  handleBudgetsChange = (journey, journeyId) => {
-    this.props.updateBudgets(journey, journeyId);
-    this.setState({
-      displayedJourney: journey,
-      currentTotalBudget: + journey[0].traffic_budget + + journey[0].food_budget
-        + + journey[0].living_budget + + journey[0].ticket_budget
-        + + journey[0].shopping_budget
-    })
-  };
-
   createNewDay = (id) => {
     const index = this.props.journeyList.findIndex(item => item.id === id);
     if (index !== -1) {
@@ -85,18 +74,6 @@ class Home extends Component {
     if (index !== -1) {
       this.props.onDeleteDay(id, index);
     }
-  };
-
-  handleUpdateExpense = (updatedJourney) => {
-    this.props.updateExpense(updatedJourney);
-    const targetAccount = updatedJourney[0].accountList.filter(item =>
-      item.id === this.state.displayedAccountId);
-    this.setState({
-      displayedJourney: updatedJourney,
-      accounts: updatedJourney[0].accountList,
-      expenseList: targetAccount[0].expenseList,
-      data: getData(updatedJourney)
-    })
   };
 
   onSelecting = () => {
@@ -151,21 +128,13 @@ class Home extends Component {
         </div>
         <div className='main-section'>
           <StaticPannel
-            journeyName={this.props.journeyName}
-            displayedJourney={this.props.displayedJourney}
-            journeyId={this.props.journeyId}
-            handleBudgetsChange={this.handleBudgetsChange}
             isEditing={this.props.isEditing}
             onEditing={this.props.onEditing}
           />
           <div className='sub-section'>
             <SetBudget
-              journeyId={this.props.journeyId}
-              displayedJourney={this.props.displayedJourney}
-              handleBudgetsChange={this.handleBudgetsChange}
               isEditing={this.props.isEditing}
               onEditing={this.props.onEditing}
-              currentTotalBudget={this.props.currentTotalBudget}
             />
             <div className='minor-section'>
               <Charts
@@ -221,10 +190,6 @@ class Home extends Component {
                   </div>
                 </div>
                 <Accounts
-                  accounts={this.props.accounts}
-                  expenseList={this.props.expenseList}
-                  displayedAccountId={this.props.displayedAccountId}
-                  handleUpdateExpense={this.handleUpdateExpense}
                   isActived={this.props.isActived}
                   toggleActive={this.props.toggleActive}
                   isEditing={this.props.isEditing}

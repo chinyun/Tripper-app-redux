@@ -1,10 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import 'whatwg-fetch';
+import { editBudgets } from './../../../../actions'
 import BudgetCharts from './BudgetCharts/BudgetCharts';
-import Url from './../../../Api/Api';
 import './SetBudget.css';
 import CancelIcon from './../../../../icons/cancel-dark-icon.png';
 import UpdateIcon from './../../../../icons/update-blue-icon.png';
+
+const mapStateToProps = (state) => {
+  return {
+    displayedJourney: state.requestData.displayedJourney,
+    journeyId: state.requestData.journeyId,
+    journeyList: state.requestData.journeyList,
+    currentTotalBudget: state.requestData.currentTotalBudget
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onEditBudgets: (data, id, index) => dispatch(editBudgets(data, id, index))
+  }
+}
 
 class SetBudget extends Component {
 	constructor(props) {
@@ -83,25 +99,17 @@ class SetBudget extends Component {
     this.setState({ updateValue: event.target.value })
   };
 
-	handleEnter = (event, type) => {
-		const { journeyId, onEditing } = this.props;
+	handleEditBudgets = (event, type) => {
     const data ={[`${type}_budget`]: this.state.updateValue};
 		if (event.keyCode === 13) {
-			fetch(`${Url}/journeys_budgets/${journeyId}`, {
-	      method: 'PATCH',
-	      headers: {'Content-Type': 'application/json'},
-	      body: JSON.stringify(data)
-	    })
-	    .then(response => response.json())
-	    .then(journey=> {
-	    	this.props.handleBudgetsChange(journey, journeyId);
+      const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
+      if (index !== -1) {
+        this.props.onEditBudgets(data, this.props.journeyId, index);
+  	    this.props.onEditing('');
         this.setState({ updateValue: 0 })
-	    })
-	    .catch(err => alert('unable to edit budget'));
-
-	    onEditing('');
-		}
-	};
+  		}
+  	}
+  }
 
 	render() {
 		const { isEditing, displayedJourney, onEditing } = this.props;
@@ -129,7 +137,7 @@ class SetBudget extends Component {
                         type='text' 
                         placeholder={displayedJourney[0].traffic_budget}
                         onChange={this.onBudgetChange}
-                        onKeyDown={(event) => this.handleEnter(event, 'traffic')}
+                        onKeyDown={(event) => this.handleEditBudgets(event, 'traffic')}
                       />
                       <button 
                         className='cancel-btn'
@@ -186,7 +194,7 @@ class SetBudget extends Component {
                         type='text' 
                         placeholder={displayedJourney[0].food_budget}
                         onChange={this.onBudgetChange}
-                        onKeyDown={(event) => this.handleEnter(event, 'food')}
+                        onKeyDown={(event) => this.handleEditBudgets(event, 'food')}
                       />
                       <button
                         className='cancel-btn'
@@ -243,7 +251,7 @@ class SetBudget extends Component {
                         type='text' 
                         placeholder={displayedJourney[0].living_budget}
                         onChange={this.onBudgetChange}
-                        onKeyDown={(event) => this.handleEnter(event, 'living')}
+                        onKeyDown={(event) => this.handleEditBudgets(event, 'living')}
                       />
                       <button
                         className='cancel-btn'
@@ -300,7 +308,7 @@ class SetBudget extends Component {
                         type='text' 
                         placeholder={displayedJourney[0].ticket_budget}
                         onChange={this.onBudgetChange}
-                        onKeyDown={(event) => this.handleEnter(event, 'ticket')}
+                        onKeyDown={(event) => this.handleEditBudgets(event, 'ticket')}
                       />
                       <button 
                         className='cancel-btn'
@@ -357,7 +365,7 @@ class SetBudget extends Component {
                         type='text' 
                         placeholder={displayedJourney[0].shopping_budget}
                         onChange={this.onBudgetChange}
-                        onKeyDown={(event) => this.handleEnter(event, 'shopping')}
+                        onKeyDown={(event) => this.handleEditBudgets(event, 'shopping')}
                       />
                       <button
                         className='cancel-btn'
@@ -407,4 +415,4 @@ class SetBudget extends Component {
 	}
 }
 
-export default SetBudget;
+export default connect(mapStateToProps, mapDispatchToProps)(SetBudget);

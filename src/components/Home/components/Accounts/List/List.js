@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import 'whatwg-fetch';
+import { editExpense } from './../../../../../actions';
 import Category from '../Category/Category.js';
-import Url from './../../../../Api/Api';
 import './List.css';
 import UpdateIcon from './../../../../../icons/update-blue-icon.png';
 import CancelIcon from './../../../../../icons/cancel-dark-icon.png';
 import ConfirmIcon from './../../../../../icons/confirm-green-icon.png';
+
+const mapStateToProps = (state) => {
+  return {
+    journeyId: state.requestData.journeyId,
+    journeyList: state.requestData.journeyList,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onEditExpense: () => dispatch(editExpense())
+  }
+}
 
 class List extends Component {
 	constructor(props) {
@@ -24,24 +38,19 @@ class List extends Component {
     }
   };
 
-	editExpense = (expense) => {
-		fetch(`${Url}/expenses/${expense.id}`, {
-			method: 'PATCH',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				category: this.state.category,
-				detail: this.state.detail,
-				amount: this.state.amount,
-				account_id: expense.account_id
-			})
-		})
-		.then(response => response.json())
-		.then(updatedJourney => {
-			this.props.handleUpdateExpense(updatedJourney);
-		})
-		.catch(err => alert('unable to update expense'));
-
-		this.props.onEditing('');
+	editExpense = (list) => {
+    const value = {
+      category: this.state.category,
+      detail: this.state.detail,
+      amount: this.state.amount,
+      account_id: list.account_id,
+      id: list.id
+    }
+    const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
+    if (index !== -1) {
+      this.props.editExpense(value, index);
+      this.props.onEditing('');
+    }
 	};
 
   componentDidMount = () => {
@@ -171,4 +180,4 @@ class List extends Component {
 	}
 }
 
-export default List;
+export default connect(mapStateToProps, mapDispatchToProps)(List);

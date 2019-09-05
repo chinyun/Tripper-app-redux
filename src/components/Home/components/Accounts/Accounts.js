@@ -5,7 +5,6 @@ import { addExpense, deleteExpense } from './../../../../actions';
 import Scroll from './Scroll/Scroll';
 import List from './List/List';
 import Category from './Category/Category.js';
-import Url from './../../../Api/Api';
 import './Accounts.css';
 import AddIcon from './../../../../icons/add-blue-icon.png'; 
 import CancelIcon from './../../../../icons/cancel-dark-icon.png';
@@ -126,7 +125,7 @@ class Accounts extends Component {
 		              list={list}
 		              isEditing={this.props.isEditing}
 		              onEditing={this.props.onEditing}
-		             	handleUpdateExpense={this.props.handleUpdateExpense}
+		             	// handleUpdateExpense={this.props.handleUpdateExpense}
 		             	deleteExpense={this.deleteExpense}
 		            /> 
 		          )}

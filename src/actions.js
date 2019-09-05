@@ -13,7 +13,10 @@ import {
   REQUEST_DELETE_DAY_SUCCESS,
   DAY_CHANGE,
   REQUEST_ADD_EXPENSE_SUCCESS,
-  REQUEST_DELETE_EXPENSE_SUCCESS
+  REQUEST_DELETE_EXPENSE_SUCCESS,
+  REQUEST_UPDATE_EXPENSE_SUCCESS,
+  REQUEST_UPDATE_BUDGETS_SUCCESS,
+  REQUEST_UPDATE_TOTALBUDGET_SUCCESS
 } from './constants.js';
 
 const Url = 'http://localhost:3000';
@@ -289,6 +292,88 @@ export const deleteExpense = (list, id, index) => (dispatch) =>{
       })
     } else {
       alert('unable to delete')
+    }
+  })
+  .catch(err => dispatch({ type: REQUEST_DATA_FAILED, payload: err }));
+}
+
+export const editExpense = (value, index) => (dispatch) => {
+  dispatch({ type: REQUEST_DATA_PENDING });
+  fetch(`${Url}/expenses/${value.id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      category: value.category,
+      detail: value.detail,
+      amount: value.amount,
+      account_id: value.account_id
+    })
+  })
+  .then(response => response.json())
+  .then(updatedJourney => {
+    if (updatedJourney) {
+      const targetAccount = updatedJourney[0].accountList.filter(item =>
+      item.id === value.account_id);
+      dispatch({
+        type: REQUEST_UPDATE_EXPENSE_SUCCESS,
+        payload: {
+          data: updatedJourney,
+          targetAccount: targetAccount,
+          index: index
+        }
+      })
+    } else {
+      alert('unable to update expense')
+    }
+  })
+  .catch(err => dispatch({ type: REQUEST_DATA_FAILED, payload: err }));
+}
+
+export const editBudgets = (data, id, index) => (dispatch) => {
+  dispatch({ type: REQUEST_DATA_FAILED });
+  fetch(`${Url}/journeys_budgets/${id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(journey => {
+    if (journey) {
+      dispatch({
+        type: REQUEST_UPDATE_BUDGETS_SUCCESS,
+        payload: {
+          data: journey,
+          index: index
+        }
+      })
+    } else {
+      alert('unable to edit budget')
+    }    
+  })
+  .catch(err => dispatch({ type: REQUEST_DATA_FAILED, payload: err }));
+}
+
+export const editTotalBudget =  (budget, id, index) => (dispatch) => {
+  dispatch({ type: REQUEST_DATA_PENDING });
+  fetch(`${Url}/journeys_budgets/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      budget: budget
+    })
+  })
+  .then(response => response.json())
+  .then(journey=> {
+    if (journey) {
+      dispatch({
+        type: REQUEST_UPDATE_TOTALBUDGET_SUCCESS,
+        payload: {
+          data: journey,
+          index: index
+        }
+      })
+    } else {
+      alert('unable to edit budget')
     }
   })
   .catch(err => dispatch({ type: REQUEST_DATA_FAILED, payload: err }));

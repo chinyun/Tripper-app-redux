@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import 'whatwg-fetch';
-import Url from './../../../Api/Api';
+import { editTotalBudget } from './../../../../actions';
 import './StaticPannel.css';
 import UpdateIcon from './../../../../icons/update-blue-icon.png';
 import CancelIcon from './../../../../icons/cancel-dark-icon.png';
 
+const mapStateToProps = (state) => {
+  return {
+    journeyId: state.requestData.journeyId,
+    journeyList: state.requestData.journeyList,
+    displayedJourney: state.requestData.displayedJourney,
+    journeyName: state.requestData.journeyName
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onEditTotalBudget: (budget, id, index) => dispatch(editTotalBudget(budget, id, index))
+  }
+}
+
 class StaticPannel extends Component {
   constructor(props) {
     super(props);
-    const { displayedJourney } = this.props;
     this.state = {
-      budget: displayedJourney[0].budget
+      budget: this.props.displayedJourney[0].budget
     }
   }
 
@@ -18,26 +33,16 @@ class StaticPannel extends Component {
     this.setState({ budget: event.target.value })
   };
 
-  handleEnter = (event) => {
+  handleEditTotalBudget = (event) => {
     if (event.key === 'Enter') {
-      fetch(`${Url}/journeys_budgets/${this.props.journeyId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          budget: this.state.budget
-        })
-      })
-      .then(response => response.json())
-      .then(journey=> {
-        this.props.handleBudgetsChange(journey, this.props.journeyId);
-      })
-      .catch(err => alert('unable to edit budget'));
-
-      this.setState({
-        budget: this.props.displayedJourney[0].budget
-      });
-
-      this.props.onEditing('');
+      const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
+      if (index !== -1) {
+        this.props.onEditTotalBudget(this.state.budget, this.props.journeyId, index);
+        this.setState({
+          budget: this.props.displayedJourney[0].budget
+        });
+        this.props.onEditing('');
+      }
     }
   }
 
@@ -65,7 +70,7 @@ class StaticPannel extends Component {
                       type='text' 
                       placeholder={displayedJourney[0].budget}
                       onChange={this.onBudgetChange}
-                      onKeyDown={this.handleEnter}
+                      onKeyDown={this.handleEditTotalBudget}
                     />
                     <button className='cancel-btn' onClick={() => onEditing('')}>
                       <img className='cancel-btn-img' alt='cancel' src={CancelIcon}/>
@@ -112,4 +117,4 @@ class StaticPannel extends Component {
   }
 }
 
-export default StaticPannel;
+export default connect(mapStateToProps, mapDispatchToProps)(StaticPannel);

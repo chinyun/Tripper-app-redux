@@ -13,7 +13,10 @@ import {
   REQUEST_DELETE_DAY_SUCCESS,
   DAY_CHANGE,
   REQUEST_ADD_EXPENSE_SUCCESS,
-  REQUEST_DELETE_EXPENSE_SUCCESS
+  REQUEST_DELETE_EXPENSE_SUCCESS,
+  REQUEST_UPDATE_EXPENSE_SUCCESS,
+  REQUEST_UPDATE_BUDGETS_SUCCESS,
+  REQUEST_UPDATE_TOTALBUDGET_SUCCESS
 } from './constants.js';
 
 import { getData } from './getdata.js';
@@ -244,6 +247,45 @@ export const requestData  = (state = initialStateData, action = {}) => {
         accounts: action.payload.data[0].accountList,
         expenseList: action.payload.targetAccount[0].expenseList,
         data: getData(action.payload.data)
+      })
+
+    case REQUEST_UPDATE_EXPENSE_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        displayedJourney: action.payload.data,
+        accounts: action.payload.data[0].accountList,
+        expenseList: action.payload.targetAccount[0].expenseList,
+        data: getData(action.payload.data)
+      })
+
+    case REQUEST_UPDATE_BUDGETS_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        displayedJourney: action.payload.data,
+        currentTotalBudget: + action.payload.data[0].traffic_budget + + action.payload.data[0].food_budget
+          + + action.payload.data[0].living_budget + + action.payload.data[0].ticket_budget
+          + + action.payload.data[0].shopping_budget
+      })
+
+    case REQUEST_UPDATE_TOTALBUDGET_SUCCESS:
+      return Object.assign({}, state, {
+        isPending: false,
+        journeys: [
+          ...state.journeys.slice(0, action.payload.index),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.data[0]),
+          ...state.journeys.slice(action.payload.index + 1)
+        ],
+        displayedJourney: action.payload.data
       })
 
     default:
