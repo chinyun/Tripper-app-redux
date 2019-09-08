@@ -25,12 +25,6 @@ const initialStateRoute = {
   route: 'landing'
 }
 
-const initialStateLogin = {
-  isPending: false,
-  isSignedIn: false,
-  error: ''
-}
-
 export const routeChange = (state = initialStateRoute, action = {}) => {
   switch(action.type) {
     case REQUEST_LOGIN_SUCCESS:
@@ -40,6 +34,12 @@ export const routeChange = (state = initialStateRoute, action = {}) => {
     default:
       return state;
   }
+}
+
+const initialStateLogin = {
+  isPending: false,
+  isSignedIn: false,
+  error: ''
 }
 
 export const requestLogIn = (state = initialStateLogin, action = {}) => {
@@ -66,7 +66,6 @@ const initialStateData = {
     email: ''
   },
   journeys: [],
-  initialJourney: {},
   journeyList: [],
   error: '',
   journeyId: '',
@@ -102,7 +101,6 @@ export const requestData  = (state = initialStateData, action = {}) => {
         data: getData(action.payload.initialJourney),
         currentTotalBudget: 0,
         displayedJourney: action.payload.initialJourney,
-        initialJourney: action.payload.initialJourney,
         user: action.payload.user,
         journeys: action.payload.data,
         journeyList: action.payload.data.map(item => {
@@ -137,14 +135,23 @@ export const requestData  = (state = initialStateData, action = {}) => {
         isPending: false,
         journeys: [
           ...state.journeys.slice(0, action.payload.index),
-          Object.assign({}, state.journeys[action.payload.index], action.payload.journeys),
+          Object.assign({}, state.journeys[action.payload.index], action.payload.journey),
           ...state.journeys.slice(action.payload.index + 1)
         ],
         journeyList: [
           ...state.journeyList.slice(0, action.payload.index),
            Object.assign({}, state.journeyList[action.payload.index], action.payload.journeyList),
            ...state.journeyList.slice(action.payload.index + 1)
-        ]
+        ],
+        journeyId: action.payload.journeyId,
+        displayedJourney: action.payload.displayedJourney,
+        accounts: action.payload.accountList,
+        expenseList: action.payload.accountList[action.payload.len].expenseList,
+        journeyName: action.payload.journeyName,
+        displayedDayId: action.payload.accountList[action.payload.len].id,
+        displayedDay: action.payload.accountList[action.payload.len].name,
+        countDays: action.payload.len + 1,
+        data: getData(action.payload.data)
       })
 
     case JOURNEY_CHANGE:

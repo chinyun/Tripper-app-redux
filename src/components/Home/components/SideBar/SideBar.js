@@ -52,7 +52,6 @@ class SideBar extends Component {
     const index = this.props.journeyList.findIndex((item)=> item.id === journeyId);
     if (index !== -1) {
       this.props.onEditJourneyName(journeyId, this.state.journeyValue, index);
-      this.props.onJourneyChange(journeyId);
       this.setState({ journeyValue: '' })
     }
   };
@@ -65,6 +64,7 @@ class SideBar extends Component {
 	};
 
 	render( ) {
+    const { journeyValue } = this.state;
 		return (
 			<div className='journeys-list-wrapper'>
 				<ul className='journeys-list'>
@@ -73,7 +73,7 @@ class SideBar extends Component {
 							key={journey.id}
 							journey={journey}
 							onValueChange={this.onValueChange}
-							onJourneyChange={this.props.onJourneyChange}
+							handleJourneyChange={this.props.handleJourneyChange}
 							onEditing={this.props.onEditing}
 							editJourneyName={this.editJourneyName}
 							isEditing={this.props.isEditing}
@@ -89,9 +89,9 @@ class SideBar extends Component {
 									className='add-journey-input' 
 									type='text' 
 									placeholder='新增行程表'
-									value={this.state.journeyValue}
+									value={journeyValue}
 									onChange={(event) => this.onValueChange(event.target.value)}
-									onKeyDown={(event) => this.handleEnter(event, this.state.journeyValue, this.props.user)}
+									onKeyDown={(event) => this.handleEnter(event, journeyValue, this.props.user)}
 								/>
 								<div className='add-journey-btn-group'>
 									<input 
@@ -99,7 +99,7 @@ class SideBar extends Component {
 										className='add-submit-input'
 										type='submit' 
 										value='新增旅程'
-										onClick={() => this.createNewJourney(this.state.journeyValue, this.props.user)}
+										onClick={() => this.createNewJourney(journeyValue, this.props.user)}
 									/>
 									<button
 										className='cancel-btn'

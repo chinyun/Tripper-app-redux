@@ -21,6 +21,11 @@ import {
 
 const Url = 'http://localhost:3000';
 
+export const routeChange = (route) => ({
+  type: ROUTE_CHANGE,
+  payload: route
+})
+
 export const submitSignIn = (email, password) => (dispatch) => {
   dispatch({ type: REQUEST_LOGIN_PENDING });
   fetch(`${Url}/signin`, {
@@ -82,11 +87,6 @@ export const submitRegister = (name, email, password) => (dispatch) => {
   .catch(err => dispatch({ type: REQUEST_LOGIN_FAILED, payload: err }))
 }
 
-export const routeChange = (route) => ({
-  type: ROUTE_CHANGE,
-  payload: route
-})
-
 export const addJourney = (value, user) => (dispatch) => {
   dispatch({ type: REQUEST_DATA_PENDING });
   fetch(`${Url}/journeys`, {
@@ -130,9 +130,15 @@ export const editJourneyName = (id, value, index) => (dispatch) => {
       dispatch({
         type: REQUEST_UPDATE_JOURNEY_SUCCESS,
         payload: {
-          journeys: journey[0],
+          journey: journey[0],
           journeyList: journey[1],
-          index: index
+          index: index,
+          len: journey[0].accountList.length - 1,
+          journeyName: journey[0].name,
+          accountList: journey[0].accountList,
+          journeyId: journey[0].id,
+          displayedJourney: journey,
+          data: journey
         }
       })
     } else {
