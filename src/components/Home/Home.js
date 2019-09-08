@@ -14,18 +14,17 @@ import SelectIcon from '../../icons/select-black-icon.png';
 const mapStateToProps = (state) => {
   return {
     journeys: state.requestData.journeys,
-    initialJourney: state.requestData.initialJourney,
     journeyList: state.requestData.journeyList,
     journeyId: state.requestData.journeyId,
-    displayedJourney: state.requestData.displayedJourney,
-    accounts: state.requestData.accounts,
-    expenseList: state.requestData.expenseList,
     journeyName: state.requestData.journeyName,
-    displayedDayId: state.requestData.displayedAccountId,
+    displayedJourney: state.requestData.displayedJourney,
+    currentTotalBudget: state.requestData.currentTotalBudget,
+    accounts: state.requestData.accounts,
+    displayedDayId: state.requestData.displayedDayId,
     displayedDay: state.requestData.displayedDay,
     countDays: state.requestData.countDays,
-    data: state.requestData.data,
-    currentTotalBudget: state.requestData.currentTotalBudget
+    expenseList: state.requestData.expenseList,
+    data: state.requestData.data
   }
 }
 
@@ -48,12 +47,12 @@ class Home extends Component {
     this.homeRef = React.createRef();
   };
 
-  onJourneyChange = (id) => {
+  handleJourneyChange = (id) => {
     const target = this.props.journeys.filter(item => item.id === id);
     this.props.onJourneyChange(target);
   };
 
-  onDayChange = (id) => {
+  handleDayChange = (id) => {
     const day = this.props.accounts.filter(item => item.id === id);
     this.props.onDayChange(day);
     this.setState({
@@ -70,6 +69,7 @@ class Home extends Component {
   };
 
   removeDay = (id) => {
+    console.log(id);
     const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
     if (index !== -1) {
       this.props.onDeleteDay(id, index);
@@ -118,7 +118,7 @@ class Home extends Component {
         >
           <div className='side-bar'>
             <SideBar
-              onJourneyChange={this.onJourneyChange}
+              handleJourneyChange={this.handleJourneyChange}
               isActived={this.props.isActived}
               toggleActive={this.props.toggleActive}
               isEditing={this.props.isEditing}
@@ -174,7 +174,7 @@ class Home extends Component {
                             <Days 
                               key={day.id} 
                               day={day} 
-                              onDayChange={this.onDayChange}
+                              handleDayChange={this.handleDayChange}
                             />
                           )}
                         </div>
@@ -183,7 +183,7 @@ class Home extends Component {
                     <div className='contorl-day'>
                       <button className='delete-btn' onClick={() => {
                         if(window.confirm(`Are you sure you wish to delete ${this.props.displayedDay} ?`))
-                        this.removeDay(this.props.displayedAccountId)
+                        this.removeDay(this.props.displayedDayId)
                       }}><span>刪除</span>
                       </button>
                     </div>

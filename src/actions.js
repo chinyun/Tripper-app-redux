@@ -44,8 +44,8 @@ export const submitSignIn = (email, password) => (dispatch) => {
         type: REQUEST_LOGIN_SUCCESS,
         payload: {
           user: journeys.pop(1),
-          data: journeys,
-          initialJourney: initialJourney,
+          journeys: journeys,
+          journey: initialJourney,
           len: initialJourney[0].accountList.length - 1
         }
       });
@@ -75,8 +75,8 @@ export const submitRegister = (name, email, password) => (dispatch) => {
         type: REQUEST_LOGIN_SUCCESS,
         payload: {
           user: journeys.pop(1),
-          data: journeys,
-          initialJourney: initialJourney,
+          journeys: journeys,
+          journey: initialJourney,
           len: initialJourney[0].accountList.length - 1
         }
       });
@@ -159,10 +159,9 @@ export const deleteJourney = (id, index) => (dispatch) => {
         dispatch({
           type: REQUEST_DELETE_JOURNEY_SUCCESS,
           payload: {
-            data: journeys,
-            len: journeys.length - 1,
+            data: journeys[journeys.length - 1],
             index: index,
-            accountLen: journeys[journeys.length - 1].accountList.length - 1
+            len: journeys[journeys.length - 1].accountList.length - 1
           }
         })
       } else {

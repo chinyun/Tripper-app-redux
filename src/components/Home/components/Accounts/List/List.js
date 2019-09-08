@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onEditExpense: () => dispatch(editExpense())
+    onEditExpense: (expense) => dispatch(editExpense(expense))
   }
 }
 
@@ -48,10 +48,16 @@ class List extends Component {
     }
     const index = this.props.journeyList.findIndex(item => item.id === this.props.journeyId);
     if (index !== -1) {
-      this.props.editExpense(value, index);
+      this.props.onEditExpense(value, index);
       this.props.onEditing('');
-    }
+    }  
 	};
+  
+  handleClickHidden = (event) => {
+    if (event.target.id !== 'item-category-btn') {
+      this.setState({ isSelecting: false })
+    }
+  };
 
   componentDidMount = () => {
     document.addEventListener('click', this.handleClickHidden);
@@ -59,12 +65,6 @@ class List extends Component {
 
   componentWillUnmount = () => {
     document.removeEventListener('click', this.handleClickHidden);
-  };
-
-  handleClickHidden = (event) => {
-    if (event.target.id !== 'item-category-btn') {
-      this.setState({ isSelecting: false })
-    }
   };
 
   onEditingChange = (list) => {

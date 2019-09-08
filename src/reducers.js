@@ -53,6 +53,8 @@ export const requestLogIn = (state = initialStateLogin, action = {}) => {
       })
     case REQUEST_LOGIN_FAILED:
       return Object.assign({}, state, { error: action.payload, isPending: false })
+    case ROUTE_CHANGE:
+      return Object.assign({}, state, { isSignedIn: false })
     default:
       return state;
   }
@@ -69,19 +71,22 @@ const initialStateData = {
   journeyList: [],
   error: '',
   journeyId: '',
-  displayedJourney: {},
-  accounts: [],
-  expenseList: [],
   journeyName: '',
+  displayedJourney: {},
+  currentTotalBudget: 0,
+  accounts: [],
   displayedDayId: '',
   displayedDay: '',
   countDays: 0,
-  data: [],
-  currentTotalBudget: 0
+  expenseList: [],
+  data: []
 }
 
 export const requestData  = (state = initialStateData, action = {}) => {
   switch(action.type) {
+    case ROUTE_CHANGE:
+      return Object.assign({}, state, initialStateData)
+
     case REQUEST_DATA_PENDING:
       return Object.assign({}, state, { isPending: true })
 
@@ -91,24 +96,26 @@ export const requestData  = (state = initialStateData, action = {}) => {
     case REQUEST_LOGIN_SUCCESS:
       return Object.assign({}, state, { 
         isPending: false,
-        journeyId: action.payload.initialJourney[0].id,
-        accounts: action.payload.initialJourney[0].accountList,
-        expenseList: action.payload.initialJourney[0].accountList[action.payload.len].expenseList,
-        journeyName: action.payload.initialJourney[0].name,
-        displayedDayId: action.payload.initialJourney[0].accountList[action.payload.len].id,
-        displayedDay: action.payload.initialJourney[0].accountList[action.payload.len].name,
-        countDays: action.payload.len + 1,
-        data: getData(action.payload.initialJourney),
-        currentTotalBudget: 0,
-        displayedJourney: action.payload.initialJourney,
         user: action.payload.user,
-        journeys: action.payload.data,
-        journeyList: action.payload.data.map(item => {
+        journeys: action.payload.journeys,
+        journeyList: action.payload.journeys.map(item => {
           return {
             id: item.id,
             name: item.name
           }
-        })
+        }),
+        journeyId: action.payload.journey[0].id,
+        journeyName: action.payload.journey[0].name,
+        displayedJourney: action.payload.journey,
+        currentTotalBudget: + action.payload.journey[0].traffic_budget + + action.payload.journey[0].food_budget
+          + + action.payload.journey[0].living_budget + + action.payload.journey[0].ticket_budget
+          + + action.payload.journey[0].shopping_budget,
+        accounts: action.payload.journey[0].accountList,
+        displayedDayId: action.payload.journey[0].accountList[action.payload.len].id,
+        displayedDay: action.payload.journey[0].accountList[action.payload.len].name,
+        countDays: action.payload.len + 1,
+        expenseList: action.payload.journey[0].accountList[action.payload.len].expenseList,
+        data: getData(action.payload.journey)        
       })
 
     case REQUEST_ADD_JOURNEY_SUCCESS:
@@ -120,13 +127,14 @@ export const requestData  = (state = initialStateData, action = {}) => {
           name: action.payload[0].name
         }],
         journeyId: action.payload[0].id,
-        displayedJourney: action.payload,
-        accounts: action.payload[0].accountList,
-        expenseList: action.payload[0].accountList[0].expenseList,
         journeyName: action.payload[0].name,
+        displayedJourney: action.payload,
+        currentTotalBudget: 0,
+        accounts: action.payload[0].accountList,
         displayedDayId: action.payload[0].accountList[0].id,
         displayedDay: action.payload[0].accountList[0].name,
         countDays: action.payload[0].accountList.length,
+        expenseList: action.payload[0].accountList[0].expenseList,
         data: getData(action.payload)
       })
 
@@ -144,26 +152,13 @@ export const requestData  = (state = initialStateData, action = {}) => {
            ...state.journeyList.slice(action.payload.index + 1)
         ],
         journeyId: action.payload.journeyId,
+        journeyName: action.payload.journeyName,
         displayedJourney: action.payload.displayedJourney,
         accounts: action.payload.accountList,
-        expenseList: action.payload.accountList[action.payload.len].expenseList,
-        journeyName: action.payload.journeyName,
         displayedDayId: action.payload.accountList[action.payload.len].id,
         displayedDay: action.payload.accountList[action.payload.len].name,
         countDays: action.payload.len + 1,
-        data: getData(action.payload.data)
-      })
-
-    case JOURNEY_CHANGE:
-      return Object.assign({}, state, {
-        journeyId: action.payload.data[0].id,
-        displayedJourney: action.payload.data,
-        accounts: action.payload.data[0].accountList,
-        expenseList: action.payload.data[0].accountList[action.payload.len].expenseList,
-        journeyName: action.payload.data[0].name,
-        displayedDayId: action.payload.data[0].accountList[action.payload.len].id,
-        displayedDay: action.payload.data[0].accountList[action.payload.len].name,
-        countDays: action.payload.len + 1,
+        expenseList: action.payload.accountList[action.payload.len].expenseList,
         data: getData(action.payload.data)
       })
 
@@ -178,16 +173,38 @@ export const requestData  = (state = initialStateData, action = {}) => {
           ...state.journeyList.slice(0, action.payload.index),
           ...state.journeyList.slice(action.payload.index + 1)
         ],
-        journeyId: action.payload.data[action.payload.len].id,
-        displayedJourney: action.payload.data[action.payload.len],
-        accounts: action.payload.data[action.payload.len].accountList,
-        expenseList: action.payload.data[action.payload.len].accountList[action.payload.accountLen].expenseList,
-        journeyName: action.payload.data[action.payload.len].name,
-        displayedDayId: action.payload.data[action.payload.len].accountList[action.payload.accountLen].id,
-        displayedDay: action.payload.data[action.payload.len].accountList[action.payload.accountLen].name,
-        countDays: action.payload.data[action.payload.len].accountList.length,
-        data: getData(action.payload.data[action.payload.len])
+        currentTotalBudget: + action.payload.data.traffic_budget
+          + + action.payload.data.food_budget
+          + + action.payload.data.living_budget
+          + + action.payload.data.ticket_budget
+          + + action.payload.data.shopping_budget,
+        journeyId: action.payload.data.id,
+        journeyName: action.payload.data.name,
+        displayedJourney: [action.payload.data],
+        accounts: action.payload.data.accountList,
+        displayedDayId: action.payload.data.accountList[action.payload.len].id,
+        displayedDay: action.payload.data.accountList[action.payload.len].name,
+        countDays: action.payload.data.accountList.length,
+        expenseList: action.payload.data.accountList[action.payload.len].expenseList,
+        data: getData([action.payload.data])
       })
+
+    case JOURNEY_CHANGE:
+      return Object.assign({}, state, {
+        journeyId: action.payload.data[0].id,
+        journeyName: action.payload.data[0].name,
+        displayedJourney: action.payload.data,
+        currentTotalBudget: + action.payload.data[0].traffic_budget + + action.payload.data[0].food_budget
+          + + action.payload.data[0].living_budget + + action.payload.data[0].ticket_budget
+          + + action.payload.data[0].shopping_budget,
+        accounts: action.payload.data[0].accountList,
+        displayedDayId: action.payload.data[0].accountList[action.payload.len].id,
+        displayedDay: action.payload.data[0].accountList[action.payload.len].name,
+        countDays: action.payload.len + 1,
+        expenseList: action.payload.data[0].accountList[action.payload.len].expenseList,
+        data: getData(action.payload.data)
+      })
+
 
     case REQUEST_ADD_DAY_SUCCESS:
       return Object.assign({}, state, {
@@ -199,10 +216,10 @@ export const requestData  = (state = initialStateData, action = {}) => {
         ],
         displayedJourney: action.payload.data,
         accounts: action.payload.data[0].accountList,
-        expenseList: action.payload.newAccount[0].expenseList,
         displayedDayId: action.payload.newAccount[0].id,
         displayedDay: action.payload.newAccount[0].name,
         countDays: action.payload.data[0].accountList.length,
+        expenseList: action.payload.newAccount[0].expenseList,
         data: getData(action.payload.data)
       })
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import './Days.css';
 
-const Days = ({ day, onDayChange }) => {
+const Days = ({ day, handleDayChange }) => {
   return (
     <button 
       className='days-option-btn' 
-      onClick={() => onDayChange(day.id)}
+      onClick={() => handleDayChange(day.id)}
     >
       {day.name}
     </button>

@@ -37,10 +37,6 @@ class App extends Component {
     this.state = initialState;
   };
 
-  // onRouteChange = (route) => {
-  //   this.setState(initialState);
-  // };
-
   componentWillUnmount = () => {
     this.props.onRouteChange('signout');
   };
@@ -72,7 +68,6 @@ class App extends Component {
   };
 
   render() {
-    const { user, onRouteChange } = this.props;
     return (
       <div className='app'> 
         { this.props.isSignedIn === true
@@ -81,8 +76,8 @@ class App extends Component {
                 <Navigation
                   isShowed={this.state.isShowedSideBar}
                   onShowSideBar={this.onShowSideBar}
-                  userName={user.name}
-                  onRouteChange={onRouteChange}
+                  userName={this.props.user.name}
+                  onRouteChange={this.props.onRouteChange}
                 />
               </header>
               <Home
@@ -94,7 +89,7 @@ class App extends Component {
               />
             </div>
           : <Landing
-              onRouteChange={onRouteChange}
+              onRouteChange={this.props.onRouteChange}
             />
         }
       </div>

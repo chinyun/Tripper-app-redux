@@ -39,7 +39,7 @@ class Journey extends Component {
 						/>
 					: <button 
 							className='change-display-journey-btn' 
-							onClick={() => this.props.onJourneyChange(journey.id)}
+							onClick={() => this.props.handleJourneyChange(journey.id)}
 						>
 							<span className='journey-name'>{journey.name}</span>
 						</button>

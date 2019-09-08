@@ -125,7 +125,6 @@ class Accounts extends Component {
 		              list={list}
 		              isEditing={this.props.isEditing}
 		              onEditing={this.props.onEditing}
-		             	// handleUpdateExpense={this.props.handleUpdateExpense}
 		             	deleteExpense={this.deleteExpense}
 		            /> 
 		          )}
