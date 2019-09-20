@@ -1,5 +1,9 @@
 # Tripper-app-redux
 
+Tripper is a web application that aims to help users arrange trip budget before or during the trip, mainly built with **React** & **Redux** , also import **D3** library to handle data visualization. This repo is the **front-end** part of the entire app.
+
+The app is already deployed on Heroku, you can view it at **[tripper-web](https://tripper-web.herokuapp.com)**.
+> Notes: this project is under optimizing and it is recommended not to use vital personal information to register or comunicate with the database.
 The most part of this app is the same with **[Tripper-app](https://github.com/chinyun/Tripper-app)**, the different part is that this project uses **[Redux](https://redux.js.org/)** to manage states with React-app.
 
 ## Getting Started
