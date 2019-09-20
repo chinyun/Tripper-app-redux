@@ -19,7 +19,7 @@ import {
   REQUEST_UPDATE_TOTALBUDGET_SUCCESS
 } from './constants.js';
 
-const Url = 'https://git.heroku.com/polar-refuge-41060.git';
+const Url = 'https://polar-refuge-41060.heroku.com';
 
 export const routeChange = (route) => ({
   type: ROUTE_CHANGE,
